@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Typing Game</title>
+	<style type="text/css">
+	*{
+		background-color: black;
+		color:white;
+		text-align: center;
+		margin-top:5%;
+	}
+	#quotes {
+		color: white;
+		text-align: center;
+		font-size: 50px;
+		border-right: 1px solid gray;
+		display: inline;
+		white-space: pre;
+	}
+	button {
+		 padding: 15px 32px;
+	}
+	textarea {
+		padding: 25px;
+		font-size: 30px;
+	}
+	</style>
+</head>
+<body>
+	<h2>Please type anything thing below, then click start</h2>
+	<textarea id="myTextarea"></textarea><br>
+	<button onclick="stop()">Pause</button>
+	<button onclick="start()">Start</button>
+	<hr>
+	<div id="quotes"></div>
+	<script type="text/javascript">
+			// var quote = prompt('Please type any thing, then click start');
+			var quotes;
+			
+			var 
+				quotesCounter,
+				counter,
+				q = document.getElementById('quotes');
+			 	function typing(){
+					q.innerHTML = q.innerHTML+quotes[quotesCounter][counter++];
+					if (counter == quotes[quotesCounter].length+1) {
+						counter = 0;
+						quotesCounter +=1;
+						q.innerHTML = '';
+						if (quotesCounter == quotes.length) {
+							quotesCounter = 0;
+						}
+					}
+
+			};
+			var run;
+
+			var start = function(){
+				var quote = document.getElementById('myTextarea').value;
+				if (quote !=null) {
+					quotes =quote.split(' ');
+				
+				}else {
+					quotes = ['What a nice day!'];
+				}
+
+				quotesCounter = 0;
+				counter = 0;
+				q.innerHTML = '';
+				run = setInterval(typing,300);
+				console.log(quotes);
+			}
+			var stop = function(){
+				clearInterval(run);
+				q.innerHTML = '';
+				var quote = document.getElementById('myTextarea').value;
+				q.innerHTML = quote;
+			}
+		
+	</script>
+</body>
+</html>
