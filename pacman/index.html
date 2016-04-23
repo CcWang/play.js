@@ -35,14 +35,25 @@
 		div.empty {
 
 		}
+		div#score {
+			left:100px;
+			color: white;
+			border: 1px solid white;
+			margin-top: 10px;
+			width: 50px;
+			height: 50px;
+		}
+		div#score p {
+			text-align: center;
+		}
 	</style>
 
 </head>
 <body>
 <div id="container">
-	
 	<div id="world"></div>
 	<div id='pacman'></div>
+	<div id="score"></div>
 </div>
 		<script type="text/javascript">
 		// features to build
@@ -50,7 +61,7 @@
 		// 2.have the pacman move up and down
 		var world = [
 			[2,2,2,2,2,2,2,2,2,2,2],
-			[2,1,1,1,1,1,2,1,1,1,2],
+			[2,0,1,1,1,1,2,1,1,1,2],
 			[2,1,1,1,1,1,2,1,1,1,2],
 			[2,1,1,2,2,2,2,1,1,1,2],
 			[2,1,1,1,1,1,2,1,1,1,2],
@@ -61,9 +72,10 @@
 		];
 
 		var pacman = {
-			x: 23,
-			y: 16
+			x: 1,
+			y: 1
 		};
+		var score = 0;
 		function displayWorld() {
 			var output ='';
 			for(var i=0;i<world.length;i++){
@@ -86,29 +98,42 @@
 		}
 
 		function displayPacman(){
-			document.getElementById('pacman').style.top = pacman.y+'px';
-			document.getElementById('pacman').style.left = pacman.x +'px';
+			document.getElementById('pacman').style.top = pacman.y*19+'px';
+			document.getElementById('pacman').style.left = pacman.x*20+'px';
 		}
 
+		function displayScore(){
+			document.getElementById('score').innerHTML = '<p>'+score+'</p>';
+		}
 
 			displayWorld();
 			displayPacman();
+			displayScore();
 
 			document.onkeydown =function(e){
-				if(e.keyCode ==37){
-					pacman.x -=20;
+				if(e.keyCode ==37 && world[pacman.y][pacman.x-1] !==2) {
+					pacman.x --;
+					// console.log(world[pacman.y][pacman.x]);
 				}
-				else if(e.keyCode ==39) {
-					pacman.x +=20;
+				else if(e.keyCode ==39 && world[pacman.y][pacman.x+1] !==2) {
+					pacman.x ++;
 				}
-				else if(e.keyCode == 40){
-					pacman.y +=20;
+				else if(e.keyCode == 40 && world[pacman.y+1][pacman.x] !==2){
+					pacman.y ++;
 				}
-				else if(e.keyCode == 38){
-					pacman.y -=20;
+				else if(e.keyCode == 38 && world[pacman.y-1][pacman.x] !==2){
+					pacman.y --;
 				}
-				console.log(e.keyCode);
+				if (world[pacman.y][pacman.x] == 1) {
+					world[pacman.y][pacman.x] = 0;
+					score +=10;
+				}
+				// console.log(e.keyCode);
 				displayPacman();
+				displayWorld();
+					displayScore();
+					console.log(pacman);
+
 			}
 
 	</script>
